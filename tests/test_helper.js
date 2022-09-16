@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const initialBlogs = [
     {
@@ -7,6 +8,7 @@ const initialBlogs = [
         author: 'Michael Chan',
         url: 'https://reactpatterns.com/',
         likes: 7,
+        user: '631e6deaa7fc0cbcbbb2bbfc',
         __v: 0
     },
     {
@@ -14,6 +16,7 @@ const initialBlogs = [
         title: 'Go To Statement Considered Harmful',
         author: 'Edsger W. Dijkstra',
         url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+        user: '631e6deaa7fc0cbcbbb2bbfc',
         likes: 5,
         __v: 0
     },
@@ -22,6 +25,7 @@ const initialBlogs = [
         title: 'Canonical string reduction',
         author: 'Edsger W. Dijkstra',
         url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+        user: '631e6deaa7fc0cbcbbb2bbfc',
         likes: 12,
         __v: 0
     },
@@ -30,6 +34,7 @@ const initialBlogs = [
         title: 'First class tests',
         author: 'Robert C. Martin',
         url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+        user: '631e6deaa7fc0cbcbbb2bbfc',
         likes: 10,
         __v: 0
     },
@@ -38,6 +43,7 @@ const initialBlogs = [
         title: 'TDD harms architecture',
         author: 'Robert C. Martin',
         url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+        user: '631e6deaa7fc0cbcbbb2bbfc',
         likes: 0,
         __v: 0
     },
@@ -46,10 +52,25 @@ const initialBlogs = [
         title: 'Type wars',
         author: 'Robert C. Martin',
         url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+        user: '631e6deaa7fc0cbcbbb2bbfc',
         likes: 2,
         __v: 0
     }  
 ]
+
+const initialUsers = [
+    {
+        name: 'SuperUser',
+        username: 'root',
+        password: 'blah',
+        id: '631e6deaa7fc0cbcbbb2bbfc'
+    }
+]
+
+const usersInDB = async() => {
+    const userObjects = await User.find({})
+    return userObjects.map(user => user.toJSON())
+}
 
 const blogsInDB = async() => {
     const blogObjects = await Blog.find({})
@@ -58,4 +79,7 @@ const blogsInDB = async() => {
 
 module.exports = {
     initialBlogs
-    ,blogsInDB}
+    ,initialUsers
+    ,blogsInDB
+    ,usersInDB
+}

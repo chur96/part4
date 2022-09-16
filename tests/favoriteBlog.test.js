@@ -53,7 +53,7 @@ describe('favorite blog', () => {
         }  
     ]
 
-    test.only('of empty list is zero', () => {
+    test('of empty list is zero', () => {
         expect(favoriteBlog([])).toBe(0)
     })
 

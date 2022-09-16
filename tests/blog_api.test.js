@@ -32,8 +32,14 @@ test('adding a blog post', async() => {
         likes: 69
     }
 
+    const token = await api
+        .post('/api/login')
+        .send({username: 'root', password: 'blah'})
+        .expect(200)
+
     await api
         .post('/api/blogs')
+        .set('Authorization', 'bearer ' + token._body.token)
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -43,7 +49,7 @@ test('adding a blog post', async() => {
 
     const contents = existingBlogs.map(blog => blog.title)
     expect(contents).toContain(newBlog.title)
-})
+}, 10000)
 
 test('default missing likes to 0', async() => {
     const newBlog = {
@@ -56,26 +62,19 @@ test('default missing likes to 0', async() => {
     expect(newBlog.likes).toEqual(0)
 })
 
-// test('creating new blog but missing author or title returns 404 error', async() => {
-//     const newBlog = {
-//         title: 'Blah blah blah',
-//         // author: 'gah gah',
-//         url: 'https://www.blah.com',
-//         likes: 69
-//     }
-
-//     await api
-//         .post('/api/blogs')
-//         .send(newBlog)
-//         .expect(400)
-
-// }, 10000)
-
 test('delete a single blog post', async() => {
     const blogsAtStart = await helper.blogsInDB()
+    console.log(blogsAtStart)
     const blogToDelete = blogsAtStart[0]
 
-    await api.delete(`/api/blogs/${blogToDelete.id}`)
+    const token = await api
+        .post('/api/login')
+        .send({username: 'root', password: 'blah'})
+        .expect(200)
+
+    await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .set('Authorization', 'bearer ' + token._body.token)
         .expect(204)
 
     const blogsAtEnd = await helper.blogsInDB() 
@@ -83,9 +82,9 @@ test('delete a single blog post', async() => {
 
     const titles = blogsAtEnd.map(blog => blog.title)
     expect(titles).not.toContain(blogToDelete.title)
-})
+}, 10000)
 
-test.only('update a blogs likes', async() => {
+test('update a blogs likes', async() => {
     const blogsAtStart = await helper.blogsInDB()
     const blogToUpdate = blogsAtStart[0]
     blogToUpdate.likes = 69

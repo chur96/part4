@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYzMWU2ZGVhYTdmYzBjYmNiYmIyYmJmYyIsImlhdCI6MTY2MzMwMDc5NX0.JZ3kHZU2X_e4Ylk8TSTf9tU9LiVzBg-yVp_uu9BTbEI
 
 {
-    "title": "Blah blah blah",
+    "title": "asdf asdf",
     "author": "gah gah",
     "url": "https://www.blah.com",
-    "likes": 69 
+    "likes": 10 
 }
